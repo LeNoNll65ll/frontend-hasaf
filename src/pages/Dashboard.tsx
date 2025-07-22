@@ -1,5 +1,7 @@
+// Importaciones de componentes UI de shadcn/ui
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+// Importación de iconos de Lucide React
 import { 
   Calculator, 
   CreditCard, 
@@ -10,12 +12,16 @@ import {
   FileText,
   Activity
 } from "lucide-react";
+// Importación de Link para navegación con React Router
 import { Link } from "react-router-dom";
+// Importación de datos mock para simular autenticación
 import { mockAuthState } from "@/data/mockData";
 
 export default function Dashboard() {
+  // Obtener el usuario actual desde el estado mock de autenticación
   const currentUser = mockAuthState.currentUser;
 
+  // Datos hardcodeados para las tarjetas de estadísticas del dashboard
   const stats = [
     {
       title: "Asignaciones Activas",
@@ -47,6 +53,7 @@ export default function Dashboard() {
     }
   ];
 
+  // Datos para las tarjetas de acciones rápidas en el dashboard
   const quickActions = [
     {
       title: "Nueva Asignación de Crédito",
@@ -78,6 +85,7 @@ export default function Dashboard() {
     }
   ];
 
+  // Datos mock para mostrar actividad reciente del sistema
   const recentActivity = [
     {
       type: "Asignación creada",

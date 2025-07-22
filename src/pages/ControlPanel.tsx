@@ -13,8 +13,81 @@ import {
   RefreshCw,
   AlertTriangle
 } from "lucide-react";
+// Importación de componentes de gráficos de Recharts
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart as RechartsPieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+  Legend
+} from "recharts";
 
 export default function ControlPanel() {
+  // Datos hardcodeados para el gráfico de ejecución mensual por unidad SAF
+  const ejecucionMensualData = [
+    {
+      mes: 'Ene',
+      'SAF-001': 2800000,
+      'SAF-002': 1200000,
+      'SAF-003': 900000,
+    },
+    {
+      mes: 'Feb',
+      'SAF-001': 3200000,
+      'SAF-002': 1800000,
+      'SAF-003': 1100000,
+    },
+    {
+      mes: 'Mar',
+      'SAF-001': 2900000,
+      'SAF-002': 1500000,
+      'SAF-003': 1300000,
+    },
+    {
+      mes: 'Abr',
+      'SAF-001': 3500000,
+      'SAF-002': 2100000,
+      'SAF-003': 1400000,
+    },
+    {
+      mes: 'May',
+      'SAF-001': 3800000,
+      'SAF-002': 2300000,
+      'SAF-003': 1600000,
+    },
+    {
+      mes: 'Jun',
+      'SAF-001': 4200000,
+      'SAF-002': 2500000,
+      'SAF-003': 1800000,
+    },
+  ];
+
+  // Datos hardcodeados para el gráfico circular de distribución por tipo de gasto
+  const distribucionGastoData = [
+    { tipo: 'Personal', valor: 18500000, color: 'hsl(var(--primary))' },
+    { tipo: 'Bienes de Consumo', valor: 8200000, color: 'hsl(var(--success))' },
+    { tipo: 'Servicios', valor: 12300000, color: 'hsl(var(--warning))' },
+    { tipo: 'Bienes de Capital', valor: 6200000, color: 'hsl(var(--accent))' },
+  ];
+
+  // Datos hardcodeados para el gráfico de líneas de tendencia temporal
+  const tendenciaEjecucionData = [
+    { periodo: 'Q1 2023', presupuesto: 15000000, ejecutado: 11200000 },
+    { periodo: 'Q2 2023', presupuesto: 16200000, ejecutado: 13800000 },
+    { periodo: 'Q3 2023', presupuesto: 17800000, ejecutado: 15100000 },
+    { periodo: 'Q4 2023', presupuesto: 18500000, ejecutado: 16300000 },
+    { periodo: 'Q1 2024', presupuesto: 19200000, ejecutado: 17400000 },
+    { periodo: 'Q2 2024', presupuesto: 20100000, ejecutado: 18200000 },
+  ];
   return (
     <div className="space-y-6">
       <div>
@@ -141,70 +214,160 @@ export default function ControlPanel() {
         </Card>
       </div>
 
-      {/* Placeholder para Grafana/Superset */}
+      {/* Gráficos Interactivos - Datos hardcodeados para demostración */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Gráfico de Ejecución Mensual */}
+        {/* Gráfico de Ejecución Mensual por Barras */}
         <Card className="shadow-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <BarChart3 className="h-5 w-5" />
-              Ejecución Mensual
+              Ejecución Mensual por Unidad SAF
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64 bg-muted/30 rounded border-2 border-dashed border-muted-foreground/30 flex items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <h3 className="font-semibold mb-2">Gráfico de Barras</h3>
-                <p className="text-sm">Ejecución mensual por unidad SAF</p>
-                <p className="text-xs mt-2 opacity-75">
-                  Integración con Apache Superset/Grafana
-                </p>
-              </div>
+            <div className="h-64">
+              {/* Contenedor responsivo para el gráfico de barras */}
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={ejecucionMensualData}>
+                  {/* Grilla del gráfico */}
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.3} />
+                  {/* Eje X - Meses */}
+                  <XAxis 
+                    dataKey="mes" 
+                    stroke="hsl(var(--muted-foreground))"
+                    fontSize={12}
+                  />
+                  {/* Eje Y - Montos */}
+                  <YAxis 
+                    stroke="hsl(var(--muted-foreground))"
+                    fontSize={12}
+                    tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
+                  />
+                  {/* Tooltip que aparece al hacer hover */}
+                  <Tooltip 
+                    formatter={(value: any) => [`$${(value / 1000000).toFixed(2)}M`, 'Ejecutado']}
+                    labelStyle={{ color: 'hsl(var(--foreground))' }}
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--background))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px'
+                    }}
+                  />
+                  {/* Leyenda */}
+                  <Legend />
+                  {/* Barras para cada unidad SAF */}
+                  <Bar dataKey="SAF-001" fill="hsl(var(--primary))" name="SAF Comando Operaciones" />
+                  <Bar dataKey="SAF-002" fill="hsl(var(--success))" name="SAF Comando Educación" />
+                  <Bar dataKey="SAF-003" fill="hsl(var(--warning))" name="SAF Comando Logístico" />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
-        {/* Distribución por Tipo de Gasto */}
+        {/* Gráfico Circular de Distribución por Tipo de Gasto */}
         <Card className="shadow-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <PieChart className="h-5 w-5" />
-              Distribución por Tipo
+              Distribución por Tipo de Gasto
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64 bg-muted/30 rounded border-2 border-dashed border-muted-foreground/30 flex items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <PieChart className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <h3 className="font-semibold mb-2">Gráfico Circular</h3>
-                <p className="text-sm">Distribución del gasto por categoría</p>
-                <p className="text-xs mt-2 opacity-75">
-                  Integración con Apache Superset/Grafana
-                </p>
-              </div>
+            <div className="h-64">
+              {/* Contenedor responsivo para el gráfico circular */}
+              <ResponsiveContainer width="100%" height="100%">
+                <RechartsPieChart>
+                  {/* Configuración del gráfico circular */}
+                  <Pie
+                    data={distribucionGastoData}
+                    dataKey="valor"
+                    nameKey="tipo"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    label={({ tipo, percent }) => `${tipo}: ${(percent * 100).toFixed(1)}%`}
+                    labelLine={false}
+                  >
+                    {/* Colores para cada segmento del gráfico */}
+                    {distribucionGastoData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  {/* Tooltip personalizado */}
+                  <Tooltip 
+                    formatter={(value: any) => [`$${(value / 1000000).toFixed(2)}M`, 'Monto']}
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--background))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px'
+                    }}
+                  />
+                </RechartsPieChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
-        {/* Tendencia Temporal */}
+        {/* Gráfico de Líneas - Tendencia Temporal */}
         <Card className="shadow-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5" />
-              Tendencia de Ejecución
+              Tendencia de Ejecución vs Presupuesto
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-64 bg-muted/30 rounded border-2 border-dashed border-muted-foreground/30 flex items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <TrendingUp className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <h3 className="font-semibold mb-2">Gráfico de Líneas</h3>
-                <p className="text-sm">Evolución temporal de la ejecución</p>
-                <p className="text-xs mt-2 opacity-75">
-                  Integración con Apache Superset/Grafana
-                </p>
-              </div>
+            <div className="h-64">
+              {/* Contenedor responsivo para el gráfico de líneas */}
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={tendenciaEjecucionData}>
+                  {/* Grilla del gráfico */}
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted-foreground))" opacity={0.3} />
+                  {/* Eje X - Períodos */}
+                  <XAxis 
+                    dataKey="periodo" 
+                    stroke="hsl(var(--muted-foreground))"
+                    fontSize={12}
+                  />
+                  {/* Eje Y - Montos */}
+                  <YAxis 
+                    stroke="hsl(var(--muted-foreground))"
+                    fontSize={12}
+                    tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
+                  />
+                  {/* Tooltip */}
+                  <Tooltip 
+                    formatter={(value: any) => [`$${(value / 1000000).toFixed(2)}M`, '']}
+                    labelStyle={{ color: 'hsl(var(--foreground))' }}
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--background))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px'
+                    }}
+                  />
+                  {/* Leyenda */}
+                  <Legend />
+                  {/* Línea de presupuesto asignado */}
+                  <Line 
+                    type="monotone" 
+                    dataKey="presupuesto" 
+                    stroke="hsl(var(--primary))" 
+                    strokeWidth={2}
+                    name="Presupuesto Asignado"
+                    dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
+                  />
+                  {/* Línea de ejecución real */}
+                  <Line 
+                    type="monotone" 
+                    dataKey="ejecutado" 
+                    stroke="hsl(var(--success))" 
+                    strokeWidth={2}
+                    name="Ejecutado"
+                    dot={{ fill: 'hsl(var(--success))', strokeWidth: 2, r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
