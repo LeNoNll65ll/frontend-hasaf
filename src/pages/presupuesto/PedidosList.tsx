@@ -38,7 +38,7 @@ export default function PedidosList() {
       const matchesDateTo = !filters.dateTo || 
         new Date(pedido.fecha) <= new Date(filters.dateTo);
       
-      const matchesEstado = !filters.estado || pedido.estado === filters.estado;
+      const matchesEstado = !filters.estado || filters.estado === 'all' || pedido.estado === filters.estado;
 
       return matchesSearch && matchesDateFrom && matchesDateTo && matchesEstado;
     });

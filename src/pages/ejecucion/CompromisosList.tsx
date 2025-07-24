@@ -38,7 +38,7 @@ export default function CompromisosList() {
       const matchesDateTo = !filters.dateTo || 
         new Date(compromiso.fecha) <= new Date(filters.dateTo);
       
-      const matchesEstado = !filters.estado || compromiso.estado === filters.estado;
+      const matchesEstado = !filters.estado || filters.estado === 'all' || compromiso.estado === filters.estado;
 
       return matchesSearch && matchesDateFrom && matchesDateTo && matchesEstado;
     });

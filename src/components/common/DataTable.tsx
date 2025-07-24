@@ -133,12 +133,12 @@ export function DataTable({
             )}
             
             {filters.onEstadoChange && (
-              <Select value={filters.estado || ''} onValueChange={filters.onEstadoChange}>
+              <Select value={filters.estado || 'all'} onValueChange={filters.onEstadoChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Estado" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Todos los estados</SelectItem>
+                  <SelectItem value="all">Todos los estados</SelectItem>
                   <SelectItem value="PENDIENTE">Pendiente</SelectItem>
                   <SelectItem value="APROBADO">Aprobado</SelectItem>
                   <SelectItem value="RECHAZADO">Rechazado</SelectItem>

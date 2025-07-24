@@ -50,7 +50,7 @@ export default function PagosList() {
       const matchesDateTo = !filters.dateTo || 
         new Date(pago.fecha) <= new Date(filters.dateTo);
       
-      const matchesEstado = !filters.estado || pago.estado === filters.estado;
+      const matchesEstado = !filters.estado || filters.estado === 'all' || pago.estado === filters.estado;
 
       return matchesSearch && matchesDateFrom && matchesDateTo && matchesEstado;
     });

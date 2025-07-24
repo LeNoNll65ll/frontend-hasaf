@@ -32,7 +32,7 @@ export default function AsignacionesList() {
       const matchesDateTo = !filters.dateTo || 
         new Date(asignacion.fecha) <= new Date(filters.dateTo);
       
-      const matchesEstado = !filters.estado || asignacion.estado === filters.estado;
+      const matchesEstado = !filters.estado || filters.estado === 'all' || asignacion.estado === filters.estado;
 
       return matchesSearch && matchesDateFrom && matchesDateTo && matchesEstado;
     });

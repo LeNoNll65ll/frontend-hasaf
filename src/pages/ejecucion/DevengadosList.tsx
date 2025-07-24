@@ -38,7 +38,7 @@ export default function DevengadosList() {
       const matchesDateTo = !filters.dateTo || 
         new Date(devengado.fecha) <= new Date(filters.dateTo);
       
-      const matchesEstado = !filters.estado || devengado.estado === filters.estado;
+      const matchesEstado = !filters.estado || filters.estado === 'all' || devengado.estado === filters.estado;
 
       return matchesSearch && matchesDateFrom && matchesDateTo && matchesEstado;
     });
