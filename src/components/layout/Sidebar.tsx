@@ -102,22 +102,22 @@ export function AppSidebar() {
                     open={openGroups.includes(item.title)} 
                     onOpenChange={() => toggleGroup(item.title)}
                   >
-                    <CollapsibleTrigger className="w-full">
-                      <SidebarMenuButton 
-                        className={`w-full justify-between ${
-                          isGroupActive(item.items) ? 'bg-sidebar-accent text-sidebar-accent-foreground' : ''
+                    <CollapsibleTrigger asChild>
+                      <div 
+                        className={`w-full flex items-center justify-between p-2 rounded cursor-pointer transition-colors ${
+                          isGroupActive(item.items) ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                         }`}
                       >
                         <div className="flex items-center gap-2">
                           <item.icon className="h-4 w-4" />
-                          {!collapsed && <span>{item.title}</span>}
+                          {!collapsed && <span className="text-sm font-medium">{item.title}</span>}
                         </div>
                         {!collapsed && (
                           <ChevronDown className={`h-4 w-4 transition-transform ${
                             openGroups.includes(item.title) ? 'rotate-180' : ''
                           }`} />
                         )}
-                      </SidebarMenuButton>
+                      </div>
                     </CollapsibleTrigger>
                     {!collapsed && (
                       <CollapsibleContent className="space-y-1 mt-1">
