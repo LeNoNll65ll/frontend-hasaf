@@ -7,7 +7,7 @@ export const mockUsers: User[] = [
     username: 'admin.saf1',
     role: 'ADMIN',
     safId: 'SAF-001',
-    safName: 'SAF Comando de Operaciones Terrestres'
+    safName: 'SAF Administración Central'
   },
   {
     id: '2',
