@@ -37,7 +37,12 @@ export default function Login() {
           description: `Bienvenido al sistema HASAF, ${user.safName}`,
         });
         
-        navigate("/app");
+        // Redirigir según el rol
+        if (user.role === 'VIEWER') {
+          navigate("/app/panel");
+        } else {
+          navigate("/app");
+        }
       } else {
         setError("Usuario o contraseña incorrectos");
         toast({
@@ -129,6 +134,7 @@ export default function Login() {
             <div className="space-y-1">
               <p><strong>admin.saf1</strong> / 123456 (Administrador)</p>
               <p><strong>user.saf2</strong> / 123456 (Usuario)</p>
+              <p><strong>viewer.panel</strong> / 123456 (Solo Panel)</p>
             </div>
           </div>
         </CardContent>

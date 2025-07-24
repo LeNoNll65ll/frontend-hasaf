@@ -15,6 +15,13 @@ export const mockUsers: User[] = [
     role: 'USER',
     safId: 'SAF-002',
     safName: 'SAF Comando de Educación y Doctrina'
+  },
+  {
+    id: '3',
+    username: 'viewer.panel',
+    role: 'VIEWER',
+    safId: 'SAF-000',
+    safName: 'Visualizador Panel de Control'
   }
 ];
 

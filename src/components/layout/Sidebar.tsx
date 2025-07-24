@@ -1,4 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
+import { mockAuthState } from "@/data/mockData";
 import { 
   Building2, 
   Calculator, 
@@ -61,6 +62,8 @@ export function AppSidebar() {
   const location = useLocation();
   const [openGroups, setOpenGroups] = useState<string[]>(['Presupuesto', 'Ejecución']);
   const collapsed = state === "collapsed";
+  const currentUser = mockAuthState.currentUser;
+  const isViewer = currentUser?.role === 'VIEWER';
 
   const isActive = (path: string) => location.pathname === path;
   const isGroupActive = (items: any[]) => items.some(item => isActive(item.url));
@@ -95,7 +98,9 @@ export function AppSidebar() {
       <SidebarContent className="p-2">
         <SidebarGroup>
           <SidebarMenu className="space-y-1">
-            {menuItems.map((item) => (
+            {menuItems
+              .filter(item => !isViewer || item.title === "Panel de Control")
+              .map((item) => (
               <SidebarMenuItem key={item.title}>
                 {item.items ? (
                   <Collapsible 
