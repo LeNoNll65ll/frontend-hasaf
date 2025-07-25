@@ -24,6 +24,7 @@ import RetraccionList from "./pages/presupuesto/RetraccionList";
 import CesionList from "./pages/presupuesto/CesionList";
 import SolicitudForm from "./pages/presupuesto/SolicitudForm";
 import AprobacionList from "./pages/presupuesto/AprobacionList";
+import SolicitudList from "./pages/presupuesto/SolicitudList";
 import { mockAuthState } from "./data/mockData";
 
 const queryClient = new QueryClient();
@@ -68,6 +69,7 @@ const App = () => (
             <Route path="presupuesto/retraccion/listar" element={<RetraccionList />} />
             <Route path="presupuesto/cesion/listar" element={<CesionList />} />
             <Route path="presupuesto/solicitud/nueva" element={<SolicitudForm />} />
+            <Route path="presupuesto/listar" element={<SolicitudList />} />
             <Route path="presupuesto/aprobacion/listar" element={<AprobacionList />} />
             
             {/* Módulo Ejecución */}
