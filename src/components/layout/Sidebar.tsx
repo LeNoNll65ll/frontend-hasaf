@@ -38,6 +38,7 @@ const menuItems = [
         title: "Solicitud Presupuestaria",
         icon: Receipt,
         items: [
+          { title: "Ver Todas", url: "/app/presupuesto/listar", icon: FileText },
           { title: "Pedido de cuota", url: "/app/presupuesto/pedidos/listar", icon: Receipt },
           { title: "Reasignación", url: "/app/presupuesto/reasignacion/listar", icon: FileText },
           { title: "Reprogramación", url: "/app/presupuesto/reprogramacion/listar", icon: FileText },
