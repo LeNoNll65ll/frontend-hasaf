@@ -18,6 +18,12 @@ import PagosList from "./pages/ejecucion/PagosList";
 import PagoForm from "./pages/ejecucion/PagoForm";
 import ControlPanel from "./pages/ControlPanel";
 import NotFound from "./pages/NotFound";
+import ReasignacionList from "./pages/presupuesto/ReasignacionList";
+import ReprogramacionList from "./pages/presupuesto/ReprogramacionList";
+import RetraccionList from "./pages/presupuesto/RetraccionList";
+import CesionList from "./pages/presupuesto/CesionList";
+import SolicitudForm from "./pages/presupuesto/SolicitudForm";
+import AprobacionList from "./pages/presupuesto/AprobacionList";
 import { mockAuthState } from "./data/mockData";
 
 const queryClient = new QueryClient();
@@ -57,6 +63,12 @@ const App = () => (
             <Route path="presupuesto/asignaciones/nueva" element={<AsignacionForm />} />
             <Route path="presupuesto/pedidos/listar" element={<PedidosList />} />
             <Route path="presupuesto/pedidos/nuevo" element={<PedidoForm />} />
+            <Route path="presupuesto/reasignacion/listar" element={<ReasignacionList />} />
+            <Route path="presupuesto/reprogramacion/listar" element={<ReprogramacionList />} />
+            <Route path="presupuesto/retraccion/listar" element={<RetraccionList />} />
+            <Route path="presupuesto/cesion/listar" element={<CesionList />} />
+            <Route path="presupuesto/solicitud/nueva" element={<SolicitudForm />} />
+            <Route path="presupuesto/aprobacion/listar" element={<AprobacionList />} />
             
             {/* Módulo Ejecución */}
             <Route path="ejecucion/compromisos/listar" element={<CompromisosList />} />
