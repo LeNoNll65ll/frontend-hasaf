@@ -32,10 +32,21 @@ const menuItems = [
     title: "Presupuesto",
     icon: Calculator,
     items: [
-      { title: "Asignaciones de Crédito", url: "/app/presupuesto/asignaciones/listar", icon: CreditCard },
+      { title: "Asignación de Crédito", url: "/app/presupuesto/asignaciones/listar", icon: CreditCard },
       { title: "Nueva Asignación", url: "/app/presupuesto/asignaciones/nueva", icon: FileText },
-      { title: "Pedidos de Cuota", url: "/app/presupuesto/pedidos/listar", icon: Receipt },
-      { title: "Nuevo Pedido", url: "/app/presupuesto/pedidos/nuevo", icon: FileText },
+      {
+        title: "Solicitud Presupuestaria",
+        icon: Receipt,
+        items: [
+          { title: "Pedido de cuota", url: "/app/presupuesto/pedidos/listar", icon: Receipt },
+          { title: "Reasignación", url: "/app/presupuesto/reasignacion/listar", icon: FileText },
+          { title: "Reprogramación", url: "/app/presupuesto/reprogramacion/listar", icon: FileText },
+          { title: "Retracción", url: "/app/presupuesto/retraccion/listar", icon: FileText },
+          { title: "Cesión", url: "/app/presupuesto/cesion/listar", icon: FileText },
+        ]
+      },
+      { title: "Nueva Solicitud Presupuestaria", url: "/app/presupuesto/solicitud/nueva", icon: FileText },
+      { title: "Aprobación presupuestaria", url: "/app/presupuesto/aprobacion/listar", icon: FileText },
     ]
   },
   {
@@ -44,10 +55,6 @@ const menuItems = [
     items: [
       { title: "Compromisos", url: "/app/ejecucion/compromisos/listar", icon: FileText },
       { title: "Nuevo Compromiso", url: "/app/ejecucion/compromisos/nuevo", icon: FileText },
-      { title: "Devengados", url: "/app/ejecucion/devengados/listar", icon: Receipt },
-      { title: "Nuevo Devengado", url: "/app/ejecucion/devengados/nuevo", icon: FileText },
-      { title: "Pagos", url: "/app/ejecucion/pagos/listar", icon: Banknote },
-      { title: "Nuevo Pago", url: "/app/ejecucion/pagos/nuevo", icon: FileText },
     ]
   },
   {
@@ -60,13 +67,15 @@ const menuItems = [
 export function AppSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
-  const [openGroups, setOpenGroups] = useState<string[]>(['Presupuesto', 'Ejecución']);
+  const [openGroups, setOpenGroups] = useState<string[]>(['Presupuesto', 'Ejecución', 'Solicitud Presupuestaria']);
   const collapsed = state === "collapsed";
   const currentUser = mockAuthState.currentUser;
   const isViewer = currentUser?.role === 'VIEWER';
 
   const isActive = (path: string) => location.pathname === path;
-  const isGroupActive = (items: any[]) => items.some(item => isActive(item.url));
+  const isGroupActive = (items: any[]) => items.some(item => 
+    item.url ? isActive(item.url) : item.items?.some((subItem: any) => isActive(subItem.url))
+  );
 
   const toggleGroup = (groupTitle: string) => {
     setOpenGroups(prev => 
@@ -124,24 +133,67 @@ export function AppSidebar() {
                         )}
                       </div>
                     </CollapsibleTrigger>
-                    {!collapsed && (
+                     {!collapsed && (
                       <CollapsibleContent className="space-y-1 mt-1">
                         {item.items.map((subItem) => (
-                          <SidebarMenuButton key={subItem.url} asChild>
-                            <NavLink 
-                              to={subItem.url}
-                              className={({ isActive }) => `
-                                flex items-center gap-2 pl-8 py-2 rounded text-sm transition-colors
-                                ${isActive 
-                                  ? 'bg-primary text-primary-foreground font-medium' 
-                                  : 'text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
-                                }
-                              `}
+                          subItem.items ? (
+                            <Collapsible 
+                              key={subItem.title}
+                              open={openGroups.includes(subItem.title)} 
+                              onOpenChange={() => toggleGroup(subItem.title)}
                             >
-                              <subItem.icon className="h-3 w-3" />
-                              <span>{subItem.title}</span>
-                            </NavLink>
-                          </SidebarMenuButton>
+                              <CollapsibleTrigger asChild>
+                                <div 
+                                  className={`w-full flex items-center justify-between pl-8 py-2 rounded cursor-pointer transition-colors ${
+                                    isGroupActive(subItem.items) ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <subItem.icon className="h-3 w-3" />
+                                    <span className="text-sm">{subItem.title}</span>
+                                  </div>
+                                  <ChevronDown className={`h-3 w-3 transition-transform ${
+                                    openGroups.includes(subItem.title) ? 'rotate-180' : ''
+                                  }`} />
+                                </div>
+                              </CollapsibleTrigger>
+                              <CollapsibleContent className="space-y-1 mt-1">
+                                {subItem.items.map((nestedItem) => (
+                                  <SidebarMenuButton key={nestedItem.url} asChild>
+                                    <NavLink 
+                                      to={nestedItem.url}
+                                      className={({ isActive }) => `
+                                        flex items-center gap-2 pl-12 py-2 rounded text-sm transition-colors
+                                        ${isActive 
+                                          ? 'bg-primary text-primary-foreground font-medium' 
+                                          : 'text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                                        }
+                                      `}
+                                    >
+                                      <nestedItem.icon className="h-3 w-3" />
+                                      <span>{nestedItem.title}</span>
+                                    </NavLink>
+                                  </SidebarMenuButton>
+                                ))}
+                              </CollapsibleContent>
+                            </Collapsible>
+                          ) : (
+                            <SidebarMenuButton key={subItem.url} asChild>
+                              <NavLink 
+                                to={subItem.url}
+                                className={({ isActive }) => `
+                                  flex items-center gap-2 pl-8 py-2 rounded text-sm transition-colors
+                                  ${isActive 
+                                    ? 'bg-primary text-primary-foreground font-medium' 
+                                    : 'text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                                  }
+                                `}
+                              >
+                                <subItem.icon className="h-3 w-3" />
+                                <span>{subItem.title}</span>
+                              </NavLink>
+                            </SidebarMenuButton>
+                          )
                         ))}
                       </CollapsibleContent>
                     )}
