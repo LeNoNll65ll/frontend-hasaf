@@ -1,4 +1,4 @@
-import { User, AsignacionCredito, PedidoCuota, Compromiso, Devengado, Pago } from '../types';
+import { User, AsignacionCredito, PedidoCuota, Compromiso, Devengado, Pago, SolicitudPresupuestaria } from '../types';
 
 // Usuarios mock
 export const mockUsers: User[] = [
@@ -126,6 +126,70 @@ export const mockPagos: Pago[] = [
     estado: 'EJECUTADO',
     devengadoId: 'DV-001',
     safId: 'SAF-001'
+  }
+];
+
+// Solicitudes presupuestarias mock
+export const mockSolicitudes: SolicitudPresupuestaria[] = [
+  {
+    id: 'SP-001',
+    fecha: '2024-01-20',
+    detalle: 'Solicitud de cuota para compra de equipos',
+    montoSolicitado: 500000,
+    estado: 'APROBADO',
+    asignacionCreditoId: 'AC-001',
+    tipo: 'PEDIDO_CUOTA',
+    safId: 'SAF-001'
+  },
+  {
+    id: 'SP-002',
+    fecha: '2024-02-15',
+    detalle: 'Pedido para servicios de mantenimiento',
+    montoSolicitado: 200000,
+    estado: 'PENDIENTE',
+    asignacionCreditoId: 'AC-002',
+    tipo: 'PEDIDO_CUOTA',
+    safId: 'SAF-002'
+  },
+  {
+    id: 'SP-003',
+    fecha: '2024-03-10',
+    detalle: 'Reasignación de fondos entre proyectos',
+    montoSolicitado: 300000,
+    estado: 'APROBADO',
+    asignacionCreditoId: 'AC-001',
+    tipo: 'REASIGNACION',
+    safId: 'SAF-001'
+  },
+  {
+    id: 'SP-004',
+    fecha: '2024-03-15',
+    detalle: 'Reprogramación de actividades del segundo trimestre',
+    montoSolicitado: 150000,
+    estado: 'PENDIENTE',
+    asignacionCreditoId: 'AC-002',
+    tipo: 'REPROGRAMACION',
+    safId: 'SAF-002'
+  },
+  {
+    id: 'SP-005',
+    fecha: '2024-04-05',
+    detalle: 'Retracción parcial de presupuesto asignado',
+    montoSolicitado: 100000,
+    estado: 'RECHAZADO',
+    asignacionCreditoId: 'AC-001',
+    tipo: 'RETRACCION',
+    safId: 'SAF-001'
+  },
+  {
+    id: 'SP-006',
+    fecha: '2024-04-20',
+    detalle: 'Cesión de recursos a unidad hermana',
+    montoSolicitado: 250000,
+    estado: 'APROBADO',
+    asignacionCreditoId: 'AC-002',
+    tipo: 'CESION',
+    safId: 'SAF-002'
   }
 ];
 

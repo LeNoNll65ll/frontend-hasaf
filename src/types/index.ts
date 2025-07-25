@@ -72,6 +72,17 @@ export interface FilterState {
   searchText?: string;
 }
 
+export interface SolicitudPresupuestaria {
+  id: string;
+  fecha: string;
+  detalle: string;
+  montoSolicitado: number;
+  estado: 'PENDIENTE' | 'APROBADO' | 'RECHAZADO';
+  asignacionCreditoId: string;
+  tipo: 'PEDIDO_CUOTA' | 'REASIGNACION' | 'REPROGRAMACION' | 'RETRACCION' | 'CESION';
+  safId: string;
+}
+
 export interface BreadcrumbItem {
   label: string;
   href?: string;
