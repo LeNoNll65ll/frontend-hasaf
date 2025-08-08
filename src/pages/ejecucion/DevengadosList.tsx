@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataTable } from "@/components/common/DataTable";
 import { mockDevengados, mockCompromisos } from "@/data/mockData";
-import { FilterState } from "@/types";
+import { FilterState, type Devengado } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 
 export default function DevengadosList() {
@@ -48,21 +48,21 @@ export default function DevengadosList() {
     navigate('/app/ejecucion/devengados/nuevo');
   };
 
-  const handleView = (devengado: any) => {
+  const handleView = (devengado: Devengado) => {
     toast({
       title: "Ver Devengado",
       description: `Visualizando detalles de ${devengado.id}`,
     });
   };
 
-  const handleEdit = (devengado: any) => {
+  const handleEdit = (devengado: Devengado) => {
     toast({
       title: "Editar Devengado",
       description: `Editando ${devengado.id}`,
     });
   };
 
-  const handleDelete = (devengado: any) => {
+  const handleDelete = (devengado: Devengado) => {
     toast({
       variant: "destructive",
       title: "Eliminar Devengado",

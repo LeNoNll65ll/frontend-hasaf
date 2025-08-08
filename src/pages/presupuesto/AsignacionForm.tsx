@@ -66,7 +66,7 @@ export default function AsignacionForm() {
   };
 
   // Función para procesar datos del Excel
-  const handleExcelDataProcessed = async (excelData: any[]) => {
+  const handleExcelDataProcessed = async (excelData: Record<string, unknown>[]) => {
     setLoading(true);
 
     // Simulamos el procesamiento masivo en el backend

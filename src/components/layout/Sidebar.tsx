@@ -1,16 +1,14 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { mockAuthState } from "@/data/mockData";
-import { 
-  Building2, 
-  Calculator, 
-  CreditCard, 
-  BarChart3, 
-  FileText, 
-  Receipt, 
-  Banknote,
+import {
+  Calculator,
+  CreditCard,
+  BarChart3,
+  FileText,
+  Receipt,
   Shield,
   ChevronDown,
-  Menu
+  type LucideIcon
 } from "lucide-react";
 import {
   Sidebar,
@@ -27,7 +25,14 @@ import {
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
 
-const menuItems = [
+interface MenuItem {
+  title: string;
+  icon: LucideIcon;
+  url?: string;
+  items?: MenuItem[];
+}
+
+const menuItems: MenuItem[] = [
   {
     title: "Presupuesto",
     icon: Calculator,
@@ -74,9 +79,8 @@ export function AppSidebar() {
   const isViewer = currentUser?.role === 'VIEWER';
 
   const isActive = (path: string) => location.pathname === path;
-  const isGroupActive = (items: any[]) => items.some(item => 
-    item.url ? isActive(item.url) : item.items?.some((subItem: any) => isActive(subItem.url))
-  );
+  const isGroupActive = (items: MenuItem[]) =>
+    items.some(item => (item.url ? isActive(item.url) : item.items?.some(subItem => isActive(subItem.url ?? ""))));
 
   const toggleGroup = (groupTitle: string) => {
     setOpenGroups(prev => 

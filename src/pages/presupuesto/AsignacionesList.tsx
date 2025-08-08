@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataTable } from "@/components/common/DataTable";
 import { mockAsignaciones } from "@/data/mockData";
-import { FilterState } from "@/types";
+import { FilterState, type AsignacionCredito } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 
 export default function AsignacionesList() {
@@ -42,7 +42,7 @@ export default function AsignacionesList() {
     navigate('/app/presupuesto/asignaciones/nueva');
   };
 
-  const handleView = (asignacion: any) => {
+  const handleView = (asignacion: AsignacionCredito) => {
     toast({
       title: "Ver Asignación",
       description: `Visualizando detalles de ${asignacion.id}`,
@@ -50,7 +50,7 @@ export default function AsignacionesList() {
     // En una implementación real, navegaría a la vista de detalle
   };
 
-  const handleEdit = (asignacion: any) => {
+  const handleEdit = (asignacion: AsignacionCredito) => {
     toast({
       title: "Editar Asignación",
       description: `Editando ${asignacion.id}`,
@@ -58,7 +58,7 @@ export default function AsignacionesList() {
     // En una implementación real, navegaría al formulario de edición
   };
 
-  const handleDelete = (asignacion: any) => {
+  const handleDelete = (asignacion: AsignacionCredito) => {
     toast({
       variant: "destructive",
       title: "Eliminar Asignación",
