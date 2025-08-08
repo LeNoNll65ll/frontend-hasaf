@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataTable } from "@/components/common/DataTable";
 import { mockPagos, mockDevengados } from "@/data/mockData";
-import { FilterState } from "@/types";
+import { FilterState, type Pago } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 
 export default function PagosList() {
@@ -60,21 +60,21 @@ export default function PagosList() {
     navigate('/app/ejecucion/pagos/nuevo');
   };
 
-  const handleView = (pago: any) => {
+  const handleView = (pago: Pago) => {
     toast({
       title: "Ver Pago",
       description: `Visualizando detalles de ${pago.id}`,
     });
   };
 
-  const handleEdit = (pago: any) => {
+  const handleEdit = (pago: Pago) => {
     toast({
       title: "Editar Pago",
       description: `Editando ${pago.id}`,
     });
   };
 
-  const handleDelete = (pago: any) => {
+  const handleDelete = (pago: Pago) => {
     toast({
       variant: "destructive",
       title: "Eliminar Pago",

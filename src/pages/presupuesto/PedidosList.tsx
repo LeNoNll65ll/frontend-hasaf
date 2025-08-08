@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataTable } from "@/components/common/DataTable";
 import { mockPedidos, mockAsignaciones } from "@/data/mockData";
-import { FilterState } from "@/types";
+import { FilterState, type PedidoCuota } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 
 export default function PedidosList() {
@@ -48,21 +48,21 @@ export default function PedidosList() {
     navigate('/app/presupuesto/pedidos/nuevo');
   };
 
-  const handleView = (pedido: any) => {
+  const handleView = (pedido: PedidoCuota) => {
     toast({
       title: "Ver Pedido",
       description: `Visualizando detalles de ${pedido.id}`,
     });
   };
 
-  const handleEdit = (pedido: any) => {
+  const handleEdit = (pedido: PedidoCuota) => {
     toast({
       title: "Editar Pedido",
       description: `Editando ${pedido.id}`,
     });
   };
 
-  const handleDelete = (pedido: any) => {
+  const handleDelete = (pedido: PedidoCuota) => {
     toast({
       variant: "destructive",
       title: "Eliminar Pedido",

@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataTable } from "@/components/common/DataTable";
 import { mockSolicitudes, mockAsignaciones } from "@/data/mockData";
-import { FilterState } from "@/types";
+import { FilterState, type SolicitudPresupuestaria } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 
 export default function SolicitudList() {
@@ -62,21 +62,21 @@ export default function SolicitudList() {
     navigate('/app/presupuesto/solicitudes/nueva');
   };
 
-  const handleView = (solicitud: any) => {
+  const handleView = (solicitud: SolicitudPresupuestaria) => {
     toast({
       title: "Ver Solicitud",
       description: `Visualizando detalles de ${solicitud.id}`,
     });
   };
 
-  const handleEdit = (solicitud: any) => {
+  const handleEdit = (solicitud: SolicitudPresupuestaria) => {
     toast({
       title: "Editar Solicitud",
       description: `Editando ${solicitud.id}`,
     });
   };
 
-  const handleDelete = (solicitud: any) => {
+  const handleDelete = (solicitud: SolicitudPresupuestaria) => {
     toast({
       variant: "destructive",
       title: "Eliminar Solicitud",
