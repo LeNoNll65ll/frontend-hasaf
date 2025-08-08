@@ -26,9 +26,9 @@ export default function Login() {
 
     // Simulamos una autenticación
     setTimeout(() => {
-      const user = mockUsers.find(u => u.username === username);
-      
-      if (user && password === "123456") {
+      const user = mockUsers.find(u => u.username === username && u.password === password);
+
+      if (user) {
         mockAuthState.isAuthenticated = true;
         mockAuthState.currentUser = user;
         
@@ -132,6 +132,7 @@ export default function Login() {
           <div className="mt-6 p-4 bg-muted/50 rounded-lg text-xs text-muted-foreground">
             <p className="font-semibold mb-2">Usuarios de prueba:</p>
             <div className="space-y-1">
+              <p><strong>admin</strong> / admin (Administrador)</p>
               <p><strong>admin.saf1</strong> / 123456 (Administrador)</p>
               <p><strong>user.saf2</strong> / 123456 (Usuario)</p>
               <p><strong>viewer.panel</strong> / 123456 (Solo Panel)</p>

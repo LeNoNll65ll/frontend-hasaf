@@ -3,8 +3,17 @@ import { User, AsignacionCredito, PedidoCuota, Compromiso, Devengado, Pago, Soli
 // Usuarios mock
 export const mockUsers: User[] = [
   {
+    id: '0',
+    username: 'admin',
+    password: 'admin',
+    role: 'ADMIN',
+    safId: 'SAF-000',
+    safName: 'SAF'
+  },
+  {
     id: '1',
     username: 'admin.saf1',
+    password: '123456',
     role: 'ADMIN',
     safId: 'SAF-001',
     safName: 'SAF'
@@ -12,6 +21,7 @@ export const mockUsers: User[] = [
   {
     id: '2',
     username: 'user.saf2',
+    password: '123456',
     role: 'USER',
     safId: 'SAF-002',
     safName: 'SAF'
@@ -19,6 +29,7 @@ export const mockUsers: User[] = [
   {
     id: '3',
     username: 'viewer.panel',
+    password: '123456',
     role: 'VIEWER',
     safId: 'SAF-000',
     safName: 'SAF'
