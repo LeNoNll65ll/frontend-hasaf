@@ -69,11 +69,11 @@ export default function ExcelUploader({ onDataProcessed, onClose }: ExcelUploade
   };
 
   // Función para validar una fila de datos
-  const validateRow = (row: any, rowIndex: number): { data: ExcelData | null; errors: ValidationError[] } => {
+  const validateRow = (row: Record<string, unknown>, rowIndex: number): { data: ExcelData | null; errors: ValidationError[] } => {
     const errors: ValidationError[] = [];
     
     // Validar fecha
-    const fecha = row['Fecha (YYYY-MM-DD)'];
+    const fecha = row['Fecha (YYYY-MM-DD)'] as string;
     if (!fecha) {
       errors.push({ fila: rowIndex, campo: 'Fecha', error: 'Campo requerido' });
     } else if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
@@ -81,13 +81,13 @@ export default function ExcelUploader({ onDataProcessed, onClose }: ExcelUploade
     }
 
     // Validar detalle
-    const detalle = row['Detalle'];
+    const detalle = row['Detalle'] as string;
     if (!detalle || detalle.trim().length === 0) {
       errors.push({ fila: rowIndex, campo: 'Detalle', error: 'Campo requerido' });
     }
 
     // Validar monto
-    const monto = parseFloat(row['Monto Asignado']);
+    const monto = parseFloat(row['Monto Asignado'] as string);
     if (!monto || isNaN(monto) || monto <= 0) {
       errors.push({ fila: rowIndex, campo: 'Monto Asignado', error: 'Debe ser un número mayor a 0' });
     }
@@ -95,7 +95,8 @@ export default function ExcelUploader({ onDataProcessed, onClose }: ExcelUploade
     // Validar campos de clasificación presupuestaria
     const camposRequeridos = ['Tarea', 'Objetivo', 'Proyecto', 'Actividad', 'Programa', 'Inciso'];
     camposRequeridos.forEach(campo => {
-      if (!row[campo] || row[campo].trim().length === 0) {
+      const valor = row[campo] as string | undefined;
+      if (!valor || valor.trim().length === 0) {
         errors.push({ fila: rowIndex, campo, error: 'Campo requerido' });
       }
     });
@@ -136,7 +137,7 @@ export default function ExcelUploader({ onDataProcessed, onClose }: ExcelUploade
         const sheet = workbook.Sheets[sheetName];
         
         // Convertir a JSON
-        const jsonData = XLSX.utils.sheet_to_json(sheet);
+        const jsonData = XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet);
 
         if (jsonData.length === 0) {
           toast({

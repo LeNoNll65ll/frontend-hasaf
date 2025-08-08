@@ -3,6 +3,7 @@
 export interface User {
   id: string;
   username: string;
+  password: string;
   role: 'ADMIN' | 'USER' | 'VIEWER';
   safId: string;
   safName: string;

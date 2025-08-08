@@ -13,16 +13,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, Filter, Download } from "lucide-react";
 
-interface Column {
-  key: string;
+interface Column<T = Record<string, unknown>> {
+  key: keyof T & string;
   label: string;
-  render?: (value: any, item: any) => ReactNode;
+  render?: (value: T[keyof T], item: T) => ReactNode;
 }
 
-interface DataTableProps {
+interface DataTableProps<T = Record<string, unknown>> {
   title: string;
-  columns: Column[];
-  data: any[];
+  columns: Column<T>[];
+  data: T[];
   loading?: boolean;
   filters?: {
     search?: string;
@@ -36,20 +36,20 @@ interface DataTableProps {
   };
   actions?: {
     onCreate?: () => void;
-    onView?: (item: any) => void;
-    onEdit?: (item: any) => void;
-    onDelete?: (item: any) => void;
+    onView?: (item: T) => void;
+    onEdit?: (item: T) => void;
+    onDelete?: (item: T) => void;
   };
 }
 
-export function DataTable({ 
-  title, 
-  columns, 
-  data, 
-  loading = false, 
+export function DataTable<T = Record<string, unknown>>({
+  title,
+  columns,
+  data,
+  loading = false,
   filters,
-  actions 
-}: DataTableProps) {
+  actions
+}: DataTableProps<T>) {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',

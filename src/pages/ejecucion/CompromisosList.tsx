@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DataTable } from "@/components/common/DataTable";
 import { mockCompromisos, mockPedidos } from "@/data/mockData";
-import { FilterState } from "@/types";
+import { FilterState, type Compromiso } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 
 export default function CompromisosList() {
@@ -48,21 +48,21 @@ export default function CompromisosList() {
     navigate('/app/ejecucion/compromisos/nuevo');
   };
 
-  const handleView = (compromiso: any) => {
+  const handleView = (compromiso: Compromiso) => {
     toast({
       title: "Ver Compromiso",
       description: `Visualizando detalles de ${compromiso.id}`,
     });
   };
 
-  const handleEdit = (compromiso: any) => {
+  const handleEdit = (compromiso: Compromiso) => {
     toast({
       title: "Editar Compromiso",
       description: `Editando ${compromiso.id}`,
     });
   };
 
-  const handleDelete = (compromiso: any) => {
+  const handleDelete = (compromiso: Compromiso) => {
     toast({
       variant: "destructive",
       title: "Eliminar Compromiso",

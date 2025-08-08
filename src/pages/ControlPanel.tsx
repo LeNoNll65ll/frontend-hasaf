@@ -244,8 +244,8 @@ export default function ControlPanel() {
                     tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
                   />
                   {/* Tooltip que aparece al hacer hover */}
-                  <Tooltip 
-                    formatter={(value: any) => [`$${(value / 1000000).toFixed(2)}M`, 'Ejecutado']}
+                  <Tooltip
+                    formatter={(value: number) => [`$${(value / 1000000).toFixed(2)}M`, 'Ejecutado']}
                     labelStyle={{ color: 'hsl(var(--foreground))' }}
                     contentStyle={{ 
                       backgroundColor: 'hsl(var(--background))', 
@@ -295,8 +295,8 @@ export default function ControlPanel() {
                     ))}
                   </Pie>
                   {/* Tooltip personalizado */}
-                  <Tooltip 
-                    formatter={(value: any) => [`$${(value / 1000000).toFixed(2)}M`, 'Monto']}
+                  <Tooltip
+                    formatter={(value: number) => [`$${(value / 1000000).toFixed(2)}M`, 'Monto']}
                     contentStyle={{ 
                       backgroundColor: 'hsl(var(--background))', 
                       border: '1px solid hsl(var(--border))',
@@ -337,8 +337,8 @@ export default function ControlPanel() {
                     tickFormatter={(value) => `$${(value / 1000000).toFixed(1)}M`}
                   />
                   {/* Tooltip */}
-                  <Tooltip 
-                    formatter={(value: any) => [`$${(value / 1000000).toFixed(2)}M`, '']}
+                  <Tooltip
+                    formatter={(value: number) => [`$${(value / 1000000).toFixed(2)}M`, '']}
                     labelStyle={{ color: 'hsl(var(--foreground))' }}
                     contentStyle={{ 
                       backgroundColor: 'hsl(var(--background))', 
