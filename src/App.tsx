@@ -25,21 +25,23 @@ import CesionList from "./pages/presupuesto/CesionList";
 import SolicitudForm from "./pages/presupuesto/SolicitudForm";
 import AprobacionList from "./pages/presupuesto/AprobacionList";
 import SolicitudList from "./pages/presupuesto/SolicitudList";
-import { mockAuthState } from "./data/mockData";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
 
 const queryClient = new QueryClient();
 
-// Componente para proteger rutas
+// Componente para proteger rutas utilizando el estado de autenticación real
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  return mockAuthState.isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
+  const { token } = useAuth();
+  return token ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+  <AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
         <Routes>
           {/* Redirección inicial */}
           <Route path="/" element={<Navigate to="/app" replace />} />
@@ -87,9 +89,10 @@ const App = () => (
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </AuthProvider>
 );
 
 export default App;

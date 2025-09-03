@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Shield, Eye, EyeOff } from "lucide-react";
-import { mockUsers, mockAuthState } from "@/data/mockData";
+import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Login() {
@@ -18,42 +18,30 @@ export default function Login() {
   
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    // Simulamos una autenticación
-    setTimeout(() => {
-      const user = mockUsers.find(u => u.username === username && u.password === password);
-
-      if (user) {
-        mockAuthState.isAuthenticated = true;
-        mockAuthState.currentUser = user;
-        
-        toast({
-          title: "Acceso exitoso",
-          description: `Bienvenido al sistema HASAF, ${user.safName}`,
-        });
-        
-        // Redirigir según el rol
-        if (user.role === 'VIEWER') {
-          navigate("/app/panel");
-        } else {
-          navigate("/app");
-        }
-      } else {
-        setError("Usuario o contraseña incorrectos");
-        toast({
-          variant: "destructive",
-          title: "Error de autenticación",
-          description: "Verifique sus credenciales e intente nuevamente",
-        });
-      }
-      
+    try {
+      await login(username, password);
+      toast({
+        title: "Acceso exitoso",
+        description: `Bienvenido al sistema HASAF`,
+      });
+      navigate("/app");
+    } catch (err) {
+      setError("Usuario o contraseña incorrectos");
+      toast({
+        variant: "destructive",
+        title: "Error de autenticación",
+        description: "Verifique sus credenciales e intente nuevamente",
+      });
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
